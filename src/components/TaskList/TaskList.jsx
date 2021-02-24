@@ -3,7 +3,7 @@ import Task from '../Task/Task'
 
 const TaskList = ({ tasks, toggleReminder, deleteTask }) => {
   return (
-    <div>
+    <div style={{marginTop: 30}}>
       { tasks.length ? tasks.map((task) => 
         <Task
           deleteTask = {() => deleteTask(task.id)}
@@ -18,7 +18,7 @@ const TaskList = ({ tasks, toggleReminder, deleteTask }) => {
          color: "gray",
          fontSize: ".8rem", 
          fontStyle: "italic",
-         marginTop: 30}}>
+        }}>
           No tasks to display
         </p>}
     </div>
