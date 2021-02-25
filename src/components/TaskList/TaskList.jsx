@@ -1,14 +1,14 @@
 import React from 'react'
 import Task from '../Task/Task'
+import { connect } from 'react-redux';
 
-const TaskList = ({ tasks, toggleReminder, deleteTask }) => {
+const TaskList = ({ tasks }) => {
   return (
     <div style={{marginTop: 30}}>
       { tasks.length ? tasks.map((task) => 
         <Task
-          deleteTask = {() => deleteTask(task.id)}
-          toggleReminder = {() => toggleReminder(task.id)}
           key = { task.id }
+          id = { task.id }
           name = { task.name }
           datetime = { task.datetime }
           reminder = { task.reminder } />
@@ -25,4 +25,10 @@ const TaskList = ({ tasks, toggleReminder, deleteTask }) => {
   )
 }
 
-export default TaskList
+const mapStateToProps = (state) => {
+  return {
+    tasks: state.tasks
+  };
+}
+
+export default connect(mapStateToProps, null)(TaskList)

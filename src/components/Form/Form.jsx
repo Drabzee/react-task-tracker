@@ -2,8 +2,10 @@ import React from 'react'
 import styles from './Form.module.css'
 import Button from '../Button/Button'
 import { useState } from 'react';
+import { addTask } from '../../redux';
+import { connect } from 'react-redux';
 
-const Form = ({ addTask }) => {
+const Form = ({ addTask, formVisibility }) => {
 
   const [name, setName] = useState('');
   const [datetime, setDatetime] = useState('');
@@ -16,6 +18,7 @@ const Form = ({ addTask }) => {
     } else if(!datetime) {
       alert('Date and Time filed is mandatory');
     } else {
+      console.log({ name, datetime, reminder });
       addTask({ name, datetime, reminder });
       e.target.reset();
       setName('');
@@ -24,7 +27,7 @@ const Form = ({ addTask }) => {
     }
   }
 
-  return (
+  return formVisibility && (
     <form onSubmit={ onSubmitListener }>
       <div className={ styles.formGroup }>
         <label>Task</label>
@@ -48,4 +51,16 @@ const Form = ({ addTask }) => {
   )
 }
 
-export default Form
+const mapStateToProps = (state) => {
+  return {
+    formVisibility: state.formVisibility
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    addTask: (task) => dispatch(addTask(task))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Form)
